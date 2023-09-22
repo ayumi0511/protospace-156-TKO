@@ -5,4 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :nickname, :profile, :occupation, :position, presence: true
+  has_many :prototypes
 end
