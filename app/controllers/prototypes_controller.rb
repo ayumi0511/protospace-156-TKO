@@ -1,6 +1,6 @@
 class PrototypesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :move_to_index, only: [:destroy]
+  before_action :move_to_index, only: [:edit, :destroy]
 
   def index
     @prototypes = Prototype.all
@@ -23,6 +23,19 @@ class PrototypesController < ApplicationController
     @prototype = Prototype.find(params[:id])
   end
 
+  def edit
+    @prototype = Prototype.find(params[:id])
+  end
+
+  def update
+    prototype = Prototype.find(params[:id])
+    if prototype.update(prototype_params)
+      redirect_to prototype_path(prototype.id)
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+  
   def destroy
     prototype= Prototype.find(params[:id])
     prototype.destroy
